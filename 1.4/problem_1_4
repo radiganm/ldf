@@ -1,0 +1,12 @@
+#!/bin/sh
+## problem_1_4
+## Mac Radigan
+
+  d=${0%/*}
+  root=${0%/*}/..
+  export PYTHONPATH=.
+  export PYTHONPATH=${PYTHONPATH}:${d}:${root}/library 
+  python3 -O -m problem_1_4 $*
+
+
+## *EOF*
