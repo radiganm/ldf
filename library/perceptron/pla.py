@@ -24,16 +24,14 @@
 
       y_hat   = signum( X * W' )
       
-      y_err   = y - y_hat
+      y_err   = |y - y_hat|
       
       rhos    = x * y
-      rho_id  = argmin y_err
+      k       = argmax y_err
 
       err     = exist y" in y_err s.t. |y"| > 0
 
-      rho     = rhos(rho_id, :)
-
-      W       = W + rho if err
+      W       = W + Y_k*X_k  if err
 
 
     training:
