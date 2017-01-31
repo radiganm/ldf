@@ -110,16 +110,11 @@ class PLA:
     y_hat = np.sign(x.dot(self.w.T))               # classify training set using current weights
     y_err = np.abs(y - y_hat)                      # compute error from truth
     ks = y_err.nonzero()[0]
-  # rhos = x.T.dot(y)                              # all potential update terms
-  # k = np.argmin(np.sum(y_err, axis=0)) - 1       #   index of selected update term
-  # rho = rhos[k, :]                               #   update term
     err = np.any(ks)                               # did the algorihtm converge?
     if err:
       k = ks[0]
       self.w = self.w + y[k] * x[k]                # update weights
       print('t: %d' % self.t)
-     #print(rhos)
-     #print(y_err.T)
     return not err
 
   def classify(self, x):
