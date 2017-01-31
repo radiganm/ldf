@@ -49,13 +49,13 @@ import matplotlib.pyplot as plt
 class PLA:
 
   def __init__(self, n):
-    """initialize a new PCA:
+    """initialize a new PLA:
          n - dimension
     """
     self.new(n)
 
   def new(self, n):
-    """initialize a new PCA:
+    """initialize a new PLA:
          n - dimension
     """
     self.n = n                       # data dimensionality
