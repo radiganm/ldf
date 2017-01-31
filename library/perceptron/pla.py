@@ -108,15 +108,18 @@ class PLA:
     """
     self.t = self.t + 1                            # increment iteration
     y_hat = np.sign(x.dot(self.w.T))               # classify training set using current weights
-    y_err = y - y_hat                              # compute error from truth
-    rhos = x.T.dot(y)                              # all potential update terms
-    rho_idx = np.argmin(np.sum(y_err, axis=0)) - 1 #   index of selected update term
-    rho = rhos[rho_idx, :]                         #   update term
-    err = np.any(y_err)                            # did the algorihtm converge?
+    y_err = np.abs(y - y_hat)                      # compute error from truth
+    ks = y_err.nonzero()[0]
+  # rhos = x.T.dot(y)                              # all potential update terms
+  # k = np.argmin(np.sum(y_err, axis=0)) - 1       #   index of selected update term
+  # rho = rhos[k, :]                               #   update term
+    err = np.any(ks)                               # did the algorihtm converge?
     if err:
-      self.w = self.w + rho                        # update weights
-      print(rhos)
-      print(y_err.T)
+      k = ks[0]
+      self.w = self.w + y[k] * x[k]                # update weights
+      print('t: %d' % self.t)
+     #print(rhos)
+     #print(y_err.T)
     return not err
 
   def classify(self, x):
@@ -127,20 +130,17 @@ class PLA:
     y = np.sign(x.dot(self.w.T))
     return y
 
-  def plot(self, x, w_star, y):
+  def plot(self, x, w_star, y, outfile=None):
     """plot classification results
          x - data set
          w_star - target function
     """
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    k_a  = (y > 0).nonzero()
+    k_a  = (y > 0).nonzero()[0]
     x1_a = x[k_a, 1]
     x2_a = x[k_a, 2]
-    k_b  = (y < 0).nonzero()
-    print(y)
-    print(k_a)
-    print(k_b)
+    k_b  = (y < 0).nonzero()[0]
     x1_b = x[k_b, 1]
     x2_b = x[k_b, 2]
     ax.scatter(x1_a, x2_a, color='b', marker='o')
@@ -153,7 +153,11 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
-    plt.show()
+    if outfile is not None:
+      print('save: %s' % (outfile))
+      plt.savefig(outfile)
+    else:
+      plt.show()
 
 
 ## *EOF*

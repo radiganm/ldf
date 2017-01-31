@@ -17,16 +17,19 @@ def main(verbose):
 
 def case(dim):
   'problem 1.4'
+  outdir = '1.4/figures/'
   p = pla.PLA(2)
   x = p.rand_data(dim)
   w_star = p.rand_target()
   y = p.target(x, w_star)
-  p.plot(x, w_star, y)
+  outfile = '%s/%s' % (outdir, 'p1.4a_target.png')
+  p.plot(x, w_star, y, outfile)
   w = p.train(x, y)
   y_hat = p.classify(x)
   y_err = y_hat - y;
   err = 0 != np.sum(y_err)
-# p.plot(x, w_star, y_hat)
+  outfile = '%s/%s' % (outdir, 'p1.4a_classify.png')
+  p.plot(x, w, y_hat, outfile)
   return (p, x, w_star, y, w, y_hat, y_err, err)
 
 def prn(name, value):

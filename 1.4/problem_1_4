@@ -6,7 +6,12 @@
   root=${0%/*}/..
   export PYTHONPATH=.
   export PYTHONPATH=${PYTHONPATH}:${d}:${root}/library 
-  python3 -O -m problem_1_4 $*
+  if [ "Darwin" != $(uname) ]; 
+  then
+    python3 -O -m problem_1_4 $*
+  else
+    /opt/anaconda3/bin/python3 -O -m problem_1_4 $*
+  fi
 
 
 ## *EOF*
