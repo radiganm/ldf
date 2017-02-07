@@ -99,21 +99,43 @@ class PLA:
       pass
     return self.w
 
-  def update(self, x, y):
-    """PLA iterative update step
+  def select(self, x, y):
+    """choose a miclassified point
          x - data set
-         returns a boolean indicating convergence
+         returns a misclassified point
     """
-    self.t = self.t + 1                            # increment iteration
     y_hat = np.sign(x.dot(self.w.T))               # classify training set using current weights
     y_err = np.abs(y - y_hat)                      # compute error from truth
     ks = y_err.nonzero()[0]
     err = np.any(ks)                               # did the algorihtm converge?
     if err:
       k = ks[0]
+    else:
+      k = None
+    return k
+
+  def update(self, x, y):
+    """PLA iterative update step
+         x - data set
+         returns a boolean indicating convergence
+    """
+    self.t = self.t + 1                            # increment iteration
+   #y_hat = np.sign(x.dot(self.w.T))               # classify training set using current weights
+   #y_err = np.abs(y - y_hat)                      # compute error from truth
+   #ks = y_err.nonzero()[0]
+   #err = np.any(ks)                               # did the algorihtm converge?
+   #if err:
+   #  k = ks[0]
+   #  self.w = self.w + y[k] * x[k]                # update weights
+   #  print('t: %d' % self.t)
+   #return not err
+    k = self.select(x, y)
+    if k is not None:
       self.w = self.w + y[k] * x[k]                # update weights
       print('t: %d' % self.t)
-    return not err
+      return False
+    else:
+      return True
 
   def classify(self, x):
     """classify a dataset using the internal PLA weights
@@ -123,11 +145,59 @@ class PLA:
     y = np.sign(x.dot(self.w.T))
     return y
 
-  def plot(self, x, w_star, y, outfile=None):
+  def plot(self, x, w, w_star, y, title=None, outfile=None):
     """plot classification results
          x - data set
          w_star - target function
     """
+   #plt.rc('text', usetex=True)
+   #plt.rc('font', family='serif')
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    k_a  = (y > 0).nonzero()[0]
+    x1_a = x[k_a, 1]
+    x2_a = x[k_a, 2]
+    k_b  = (y < 0).nonzero()[0]
+    x1_b = x[k_b, 1]
+    x2_b = x[k_b, 2]
+    ax.scatter(x1_a, x2_a, color='b', marker='o')
+    ax.scatter(x1_b, x2_b, color='r', marker='x')
+    dx1 = np.linspace(-150, 150, 2)
+    ## target function
+    w0 = w_star.T[0]
+    w1 = w_star.T[1]
+    w2 = w_star.T[2]
+    m = -w1/w2
+    b = -w0/w2
+    dx2 = m * dx1 + b
+    ax.plot(dx1, dx2, 'g')
+    ## PLA results
+    w0 = w.T[0]
+    w1 = w.T[1]
+    w2 = w.T[2]
+    m = -w1/w2
+    b = -w0/w2
+    dx2 = m * dx1 + b
+    ax.plot(dx1, dx2, 'm--')
+    ## decorations
+    plt.xlabel(r'x1')
+    plt.ylabel(r'x2')
+    if title is not None:
+      ax.set_title(title)
+    if outfile is not None:
+      print('save: %s' % (outfile))
+      plt.savefig(outfile)
+    else:
+      plt.show()
+    return ax
+
+  def plot1(self, x, w_star, y, title=None, outfile=None):
+    """plot classification results
+         x - data set
+         w_star - target function
+    """
+   #plt.rc('text', usetex=True)
+   #plt.rc('font', family='serif')
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     k_a  = (y > 0).nonzero()[0]
@@ -146,11 +216,77 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
+    plt.xlabel(r'x1')
+    plt.ylabel(r'x2')
+    if title is not None:
+      ax.set_title(title)
     if outfile is not None:
       print('save: %s' % (outfile))
       plt.savefig(outfile)
     else:
       plt.show()
+    return ax
 
+  def plot_misclassified(self, x, w_star, y, k, title=None, outfile=None):
+    """plot a misclassified point
+         x - data set
+         w_star - target function
+    """
+   #plt.rc('text', usetex=True)
+   #plt.rc('font', family='serif')
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    k_a  = (y > 0).nonzero()[0]
+    x1_a = x[k_a, 1]
+    x2_a = x[k_a, 2]
+    k_b  = (y < 0).nonzero()[0]
+    x1_b = x[k_b, 1]
+    x2_b = x[k_b, 2]
+    ax.scatter(x1_a, x2_a, color='b', marker='o')
+    ax.scatter(x1_b, x2_b, color='r', marker='x')
+    x1_m = k[1]
+    x2_m = k[2]
+    ax.scatter(x1_m, x2_m, color='b', marker='*')
+    w0 = w_star.T[0]
+    w1 = w_star.T[1]
+    w2 = w_star.T[2]
+    m = -w1/w2
+    b = -w0/w2
+    dx1 = np.linspace(-150, 150, 2)
+    dx2 = m * dx1 + b
+    ax.plot(dx1, dx2, color='m')
+    plt.xlabel(r'x1')
+    plt.ylabel(r'x2')
+    if title is not None:
+      ax.set_title(title)
+    if outfile is not None:
+      print('save: %s' % (outfile))
+      plt.savefig(outfile)
+    else:
+      plt.show()
+    return ax
+
+  def training_movie(self, x, w_star, y, title=None, outfile=None):
+    """save a movie of the PLA training process
+         returns the perceptron weights
+    """
+    t = 0
+    err = True
+    base = outfile
+    while err:
+      k = self.select(x, y)
+      outfile = "%s_%03.3d.png" % (base, self.t)
+      title = "%s, t=%d" % (title, self.t)
+      if k is not None:
+        self.plot_misclassified(x, w_star, y, k, title, outfile)
+        self.w = self.w + y[k] * x[k]                # update weights
+        print('t: %d' % self.t)
+        err = True
+      else:
+        self.plot1(x, w_star, y, title, outfile)
+        print('t: %d' % self.t)
+        err = False
+      t = t + 1
+    return self.w
 
 ## *EOF*

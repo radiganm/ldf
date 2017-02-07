@@ -38,12 +38,6 @@ $P(B_B|k_1) = \frac{P(k_1|B_B) P(B_B)}{P(k_1)} = \frac{\frac{1}{4} \cdot \frac{1
 $P(k_2) = P(k_1|B_B) P(k_B) + P(B_B|k_1) P(k_B) = \frac{1}{3} \cdot 1 + \frac{1}{6} \cdot \frac{1}{2} = \frac{1}{3} + \frac{1}{12} + \frac{4}{12} + \frac{1}{12} = \frac{5}{12}$
 
 
-
-
-
-
-
-
 # Problem 1.2 
 
 Consider the perceptron in two dimensions: $h(x) = sign(w^\intercal x)$ where $w = [w_0,w_1,w_2]$ and $x = [1,x_1,x_2]$. Technically, $x$ has three coordinates, but we call this perceptron two-dimensional because the first coordinate is fixed at 1.
@@ -102,22 +96,35 @@ In Exercise 1.4, we use an artificial data set to study the perceptron learning 
 
 (a) Generate a linearly separable data set of size 20 as indicated in Exercise 1.4. Plot the examples $(x_n, y_n)$ as well as the target function f on a plane. Be sure to mark the examples from different classes differently, and add labels to the axes of the plot.
 
-![Target](./1.4/figures/p1.4a_target.png "Target 1.4 (a)")
-![Target](./1.4/figures/p1.4a_classify.png "Classify 1.4 (a)")
+![Target](./1.04/figures/p1.4a.png "1.4 (a)")
 
 (b) Run the perceptron learning algorithm on the data set above. Report the number of updates that the algorithm takes before converging. Plot the examples $(x_n, y_n)$, the target function f, and the final hypothesis g in the same figure. Comment on whether f is close to g.
 
+![Target](./1.04/figures/p1.4b.png "1.4 (b)")
+
 (c) Repeat everything in (b) with another randomly generated data set of size 20. Compare your results with (b).
+
+![Target](./1.04/figures/p1.4c.png "1.4 (c)")
 
 (d) Repeat everything in (b) with another randomly generated data set of size 100. Compare your results with (b).
 
+![Target](./1.04/figures/p1.4d.png "1.4 (d)")
+
 (e) Repeat everything in (b) with another randomly generated data set of size 1, 000. Compare your results with (b).  
+
+![Target](./1.04/figures/p1.4e.png "1.4 (e)")
 
 (f) Modify the algorithm such that it takes $x_n \in \mathbb{R}^n$  instead of $\mathbb{R}^2$. Randomly generate a linearly separable data set of size 1,000 with $x_n \in \mathbb{R}^10$ and feed the data set to the algorithm. How many updates does the algorithm take to converge?
 
 (g) Repeat the algorithm on the same data set as (f) for 100 experiments. In the iterations of each experiment, pick $x(t)$ randomly instead of deterministically. Plot a histogram  r the number of updates that the algorithm takes to converge.
 
 (h) Summarize your conclusions with respect to accuracy and running time as a function of $N$ and $d$.
+
+
+
+
+
+
 
 
 

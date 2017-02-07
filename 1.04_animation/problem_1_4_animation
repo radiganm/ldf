@@ -1,0 +1,19 @@
+#!/bin/sh
+## problem_1_4_animation
+## Mac Radigan
+
+  d=${0%/*}; f=${0##*/}; n=${f%.*}; e=${f##*.}
+  root=${0%/*}/..
+  export PYTHONPATH=.
+  export PYTHONPATH=${PYTHONPATH}:${d}:${root}/library 
+  if [ "Darwin" != $(uname) ]; 
+  then
+    python3 -O -m $n $*
+  else
+    /opt/anaconda3/bin/python3 -O -m $n $*
+  fi
+
+  ffmpeg -start_number 0 -i 1.04_animation/figures/p1.4_%03d.png -vcodec mpeg4 p1.04.avi
+
+
+## *EOF*
