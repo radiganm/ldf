@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-## problem_1_4_e.py
+## problem_1_4_a.py
 ## Mac Radigan
 
-"""problem_1_4_e.py
+"""problem_1_4_a.py
 """
 
 import argparse
@@ -12,22 +12,28 @@ import numpy as np
 
 def main(verbose):
   'problem 1.4'
-  dim = 1000
+  dim = 20
   test(dim)
 
 def case(dim):
   'problem 1.4'
-  outdir = '1.04/figures/'
+  outdir = 'figures/'
   p = pla.PLA(2)
   x = p.rand_data(dim)
   w_star = p.rand_target()
   y = p.target(x, w_star)
+ #outfile = '%s/%s' % (outdir, 'p1.4a_target.png')
+ #title = 'p1.4(a)  Target Function, %d points' % (dim)
+ #ax = p.plot1(x, w_star, y, title, outfile)
   w = p.train(x, y)
   y_hat = p.classify(x)
   y_err = y_hat - y;
   err = 0 != np.sum(y_err)
-  outfile = '%s/%s' % (outdir, 'p1.4e.png')
-  title = 'p1.4(e)  PLA, %d points, %d iterations' % (dim, p.t)
+ #outfile = '%s/%s' % (outdir, 'p1.4a_classify.png')
+ #title = 'p1.4(a)  PLA Results, %d iterations' % (p.t)
+ #ax = p.plot1(x, w, y_hat, title, outfile)
+  outfile = '%s/%s' % (outdir, 'p1.4a.png')
+  title = 'p1.4(a)  PLA, %d points, %d iterations' % (dim, p.t)
   ax = p.plot(x, w, w_star, y_hat, title, outfile)
   return (p, x, w_star, y, w, y_hat, y_err, err)
 

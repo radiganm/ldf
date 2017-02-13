@@ -180,8 +180,8 @@ class PLA:
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, 'm--')
     ## decorations
-    ax.set_xlim(0., 200.0)
-    ax.set_ylim(0., 200.0)
+    ax.set_xlim(-200.0, 200.0)
+    ax.set_ylim(-200.0, 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:
@@ -218,8 +218,8 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
-    ax.set_xlim(0., 200.0)
-    ax.set_ylim(0., 200.0)
+    ax.set_xlim(-200.0, 200.0)
+    ax.set_ylim(-200.0, 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:
@@ -259,8 +259,8 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
-    ax.set_xlim(0., 200.0)
-    ax.set_ylim(0., 200.0)
+    ax.set_xlim(-200.0, 200.0)
+    ax.set_ylim(-200.0, 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:

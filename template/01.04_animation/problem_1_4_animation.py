@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-## problem_1_4_c.py
+## problem_1_4_animation.py
 ## Mac Radigan
 
-"""problem_1_4_c.py
+"""problem_1_4_animation.py
 """
 
 import argparse
@@ -11,24 +11,24 @@ from perceptron import pla
 import numpy as np
 
 def main(verbose):
-  'problem 1.4'
+  'problem 1.4 animation'
   dim = 20
   test(dim)
 
 def case(dim):
-  'problem 1.4'
-  outdir = '1.04/figures/'
+  'problem 1.4 animation'
+  outdir = 'figures/'
   p = pla.PLA(2)
   x = p.rand_data(dim)
   w_star = p.rand_target()
   y = p.target(x, w_star)
   w = p.train(x, y)
+  title = 'p1.4 PLA, %d points' % (dim)
+  outfile = '%s/%s' % (outdir, 'p1.4_animation')
+  p.training_movie(x, w_star, y, title, outfile)
   y_hat = p.classify(x)
   y_err = y_hat - y;
   err = 0 != np.sum(y_err)
-  outfile = '%s/%s' % (outdir, 'p1.4c.png')
-  title = 'p1.4(c)  PLA, %d points, %d iterations' % (dim, p.t)
-  ax = p.plot(x, w, w_star, y_hat, title, outfile)
   return (p, x, w_star, y, w, y_hat, y_err, err)
 
 def prn(name, value):
@@ -46,7 +46,7 @@ def test(dim):
   prn("err'", err)
 
 if __name__ == '__main__':
- parser = argparse.ArgumentParser(description='problem 1.4 (a)')
+ parser = argparse.ArgumentParser(description='problem 1.4')
  parser.add_argument('-v', '--verbose', action='store_true', dest='verbose',   default=False,   help='verbose output to stdout')
  args = parser.parse_args()
  main(args.verbose)

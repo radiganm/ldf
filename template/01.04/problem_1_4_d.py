@@ -17,7 +17,7 @@ def main(verbose):
 
 def case(dim):
   'problem 1.4'
-  outdir = '1.04/figures/'
+  outdir = 'figures/'
   p = pla.PLA(2)
   x = p.rand_data(dim)
   w_star = p.rand_target()
