@@ -180,6 +180,8 @@ class PLA:
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, 'm--')
     ## decorations
+    ax.set_xlim(0., 200.0)
+    ax.set_ylim(0., 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:
@@ -216,6 +218,8 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
+    ax.set_xlim(0., 200.0)
+    ax.set_ylim(0., 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:
@@ -255,6 +259,8 @@ class PLA:
     dx1 = np.linspace(-150, 150, 2)
     dx2 = m * dx1 + b
     ax.plot(dx1, dx2, color='m')
+    ax.set_xlim(0., 200.0)
+    ax.set_ylim(0., 200.0)
     plt.xlabel(r'x1')
     plt.ylabel(r'x2')
     if title is not None:
@@ -273,20 +279,39 @@ class PLA:
     t = 0
     err = True
     base = outfile
+   #while err:
+   #  k = self.select(x, y)
+   #  outfile = "%s_%03.3d.png" % (base, self.t)
+   #  title = "%s, t=%d" % (title, self.t)
+   #  if k is not None:
+   #    self.plot_misclassified(x, w_star, y, k, title, outfile)
+   #    self.w = self.w + y[k] * x[k]                # update weights
+   #    print('t: %d' % self.t)
+   #    err = True
+   #  else:
+   #    self.plot1(x, w_star, y, title, outfile)
+   #    print('t: %d' % self.t)
+   #    err = False
+   #  t = t + 1
+   #return self.w
+   ########
     while err:
       k = self.select(x, y)
+      self.t = self.t + 1                            # increment iteration
       outfile = "%s_%03.3d.png" % (base, self.t)
       title = "%s, t=%d" % (title, self.t)
-      if k is not None:
-        self.plot_misclassified(x, w_star, y, k, title, outfile)
+      y_hat = np.sign(x.dot(self.w.T))               # classify training set using current weights
+      y_err = np.abs(y - y_hat)                      # compute error from truth
+      ks = y_err.nonzero()[0]
+      err = np.any(ks)                               # did the algorihtm converge?
+      if err:
+        k = ks[0]
         self.w = self.w + y[k] * x[k]                # update weights
+        self.plot_misclassified(x, w_star, y, k, title, outfile)
         print('t: %d' % self.t)
-        err = True
       else:
         self.plot1(x, w_star, y, title, outfile)
         print('t: %d' % self.t)
-        err = False
-      t = t + 1
-    return self.w
+      return not err
 
 ## *EOF*
