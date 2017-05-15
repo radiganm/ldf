@@ -2,7 +2,7 @@
 ## makefile
 ## Mac Radigan
 
-.PHONY: init run dox pandoc
+.PHONY: init run dox pandoc view
 
 .DEFAULT_GOAL := default
 
@@ -25,11 +25,14 @@ dox: init
 	    -o $(output)
 
 pandoc: dox
-	pandoc $(output)/lfd.md         \
-	     --wrap=preserve            \
-	     -f markdown                \
-	     -t latex                   \
-	     -o lfd.pdf
+	pandoc $(output)/lfd.md                \
+	     --wrap=preserve                   \
+	     --template=./include/template.tex \
+	     -f markdown                       \
+	     -F pandoc-minted                  \
+	     -t latex                          \
+	     -o lfd.tex
+	pdflatex --shell-escape lfd.tex
 
 run:
 	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_a.py
@@ -40,6 +43,9 @@ run:
 
 init:
 	mkdir -p $(figures)
+
+view:
+	@zathura -x a lfd.pdf 1>/dev/null 2>/dev/null
 
 update:
 	git submodule init &&   \
