@@ -5,16 +5,22 @@
   FORCES__SCRIPT_FILE=1;
   ux=false;
 
-  function do_plot(ux, rad, thk, c1, c2, x1, x2, w)
-
+  function ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w)
+    
     if ux
       show = 'on';
-      save = false;
     else
       show = 'off';
-      save = true;
     end
-
+    
+    %% plot input dataset
+    ax = figure(30112);
+    set(ax, 'visible', show);
+      plot(x1(c1), x2(c1), 'LineWidth', 1, 'r.');
+      hold on;
+      plot(x1(c2), x2(c2), 'LineWidth', 1, 'b.');
+      hold on;
+    
     %% plot input dataset
     ax = figure(30112);
     set(ax, 'visible', show);
@@ -22,15 +28,7 @@
       hold on;
       plot(x1(c2), x2(c2), 'bx');
       hold on;
-
-    %% plot input dataset
-    ax = figure(30112);
-    set(ax, 'visible', show);
-      plot(x1(c1), x2(c1), 'rx');
-      hold on;
-      plot(x1(c2), x2(c2), 'bx');
-      hold on;
-
+    
     %% plot final hypothesis, g(x)
     ext = rad + thk;
     m = -w(2)/w(3);
@@ -41,14 +39,10 @@
     set(ax, 'visible', show);
       plot(dx1, dx2, 'Color', 'green', 'LineWidth', 3);
       hold off;
-
+    
     drawnow();
-  
-    if save
-      saveas(ax, 'figures/p3.1b.png');
-    end
-  
-  end % function mytest
+    
+  end % function do_plot
 
   N   = 2e3;  % number of training samples
   rad = 10;   % radius of semi-circle
@@ -77,6 +71,10 @@
   w = y * pinv(X);
 
   %% plot results
-  do_plot(ux, rad, thk, c1, c2, x1, x2, w);
+  ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w);
+
+  if ~ux
+    saveas(ax, 'figures/p3.1b.png');
+  end
 
 ## *EOF*
