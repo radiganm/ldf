@@ -4,10 +4,12 @@ title: Learning From Data - worked examples
 author: Mac Radigan
 header-includes:
  - \usepackage{amsmath}
+ - \usepackage{mathtools}
  - \usepackage{mathrsfs}
  - \usepackage{minted}
  - \usepackage[skins,minted]{tcolorbox}
  - \usepackage{mdframed}
+ - \newcommand{\floor}[1]{\lfloor {{one}} \rfloor}
 
  - \definecolor{pythonbg}{rgb}{0.95,0.95,0.95}
  - \newcommand{\pythonlist}[1]{

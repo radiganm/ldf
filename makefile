@@ -2,9 +2,11 @@
 ## makefile
 ## Mac Radigan
 
-.PHONY: init run dox pandoc view
+.PHONY: init run dox pandoc view clean clobber
 
 .DEFAULT_GOAL := default
+
+target = lfd
 
 template = ./template
 output   = ./output
@@ -34,12 +36,24 @@ pandoc: dox
 	     -o lfd.tex
 	pdflatex --shell-escape lfd.tex
 
+clobber: clean
+	-rm -f $(target).pdf
+
+clean:
+	-rm -f $(target).tex
+	-rm -f $(target).aux
+	-rm -f $(target).log
+	-rm -f $(target).out
+	-rm -f $(target).aux
+
 run:
-	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_a.py
-	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_b.py
-	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_c.py
-	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_d.py
-	env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_e.py
+	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_a.py
+	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_b.py
+	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_c.py
+	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_d.py
+	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_e.py
+	env octave --norc $(output)/03.01/problem_3_1_a.m
+	env octave --norc $(output)/03.01/problem_3_1_b.m
 
 init:
 	mkdir -p $(figures)

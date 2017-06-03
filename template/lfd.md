@@ -17,9 +17,13 @@
 
 {# chapter 2 #}
 {% include 'lfd-ch02_notes.md' %}
+{% include 'lfd-p02_01.md' %}
 {% include 'lfd-p02_03.md' %}
+{% include 'lfd-p02_08.md' %}
+{% include 'lfd-p02_13.md' %}
 
 {# chapter 3 #}
 {% include 'lfd-ch03_notes.md' %}
+{% include 'lfd-p03_01.md' %}
 
 {# *EOF* #}

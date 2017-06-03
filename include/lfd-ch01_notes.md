@@ -120,7 +120,7 @@ Proof:
 A *typical set* $A_\epsilon^{\left(n\right)}$ with respect to p(x) is the set of sequences $\left(x_1, x_2, \cdots, x_N\right) \in \mathcal{X}^N$ with the property
 
 \begin{equation*}
-e^{-N\left(H\left(X\right)+\epsilon\right)} \leq p\left(x_1, x_2, \cdots, x_n\right) \leq 2^{-N\left(H\left(X\right)-\epsilon\right)}
+2^{-N\left(H\left(X\right)+\epsilon\right)} \leq p\left(x_1, x_2, \cdots, x_n\right) \leq 2^{-N\left(H\left(X\right)-\epsilon\right)}
 \end{equation*}
 
 
