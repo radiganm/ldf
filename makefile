@@ -52,7 +52,8 @@ run:
 	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_c.py
 	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_d.py
 	#env PYTHONPATH=./library python3 $(output)/01.04/problem_1_4_e.py
-	env octave --norc $(output)/03.01/problem_3_1_a.m
+	#env octave --norc $(output)/03.01/problem_3_1_a.m
+	env octave --norc $(output)/03.01/problem_3_1_a_fast.m
 	env octave --norc $(output)/03.01/problem_3_1_b.m
 
 init:

@@ -1,2 +1,0 @@
-# ldf
-Learning From Data

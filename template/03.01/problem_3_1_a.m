@@ -68,26 +68,34 @@
  %w = randn(1,3);                % initial weights
   X = [ones(size(y)); x1; x2];   % training data
   k_err = inf;                   % convergence criteria
-  while k_err > 0 
-    t = t + 1;                   % update training step counter
-    ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
+  for n = 1:N
+    x_n = X(:,n);
+    t = t + 1;                      % update training step counter
+    if ~mod(n,500)
+     %ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
+    end
     if ux
       fprintf(1, 'error: %f\n', k_err);
       t
       w
     end
-    y_hat = sign(w*X);           % classify
-    y_err = 0.5*abs(y - y_hat);  % residual
-    [k_err, k] = max(y_err);     % select misclassified point
-    if k_err <= 0, continue, end
-    x_k = X(:,k);                %   in the training data
-    y_k = y(k);                  %   in the target set
-    w   = w + y_k*x_k';          % update weights
+    y_hat = sign(w*x_n);            % classify
+    y_err = 0.5*abs(y(n) - y_hat);  % residual
+    [k_err, k] = max(y_err);        % select misclassified point
+    if k_err <= 0 
+      continue
+    else
+      wg = w;
+    end
+    x_k = x_n(:,k);                 %   in the training data
+    y_k = y(k);                     %   in the target set
+    w   = w + y_k*x_k';             % update weights
     if ux
       disp('...')
       input('...')
     end
   end % training
+  ax = do_plot(ux, rad, thk, c1, c2, x1, x2, wg, k_err);
 
   ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
   if ux

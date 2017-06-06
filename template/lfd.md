@@ -25,5 +25,10 @@
 {# chapter 3 #}
 {% include 'lfd-ch03_notes.md' %}
 {% include 'lfd-p03_01.md' %}
+{% include 'lfd-e03_03.md' %}
+{% include 'lfd-p03_10.md' %}
+
+{# Appendix A: Cayley-Hamilton Theorem #}
+{% include 'lfd-appendix-Cayley-Hamilton.md' %}
 
 {# *EOF* #}

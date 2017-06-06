@@ -1,0 +1,4 @@
+#+TITLE: Learning From Data
+#+AUTHOR: Mac Radigan
+
+ # *EOF* 
