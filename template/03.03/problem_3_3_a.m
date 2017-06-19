@@ -1,5 +1,5 @@
 #!/usr/bin/env octave
-## problem_3_1_a.m
+## problem_3_3_a.m
 ## Mac Radigan
 
   FORCES__SCRIPT_FILE=1;
@@ -15,7 +15,7 @@
     end
     
     %% plot input dataset
-    ax = figure(30111);
+    ax = figure(30311);
     set(ax, 'visible', show);
       plot(x1(c1), x2(c1), 'LineWidth', 1, 'r.');
       hold on;
@@ -46,7 +46,7 @@
   N   = 2e3;  % number of training samples
   rad = 10;   % radius of semi-circle
   thk =  5;   % thickness of semi-circle
-  sep =  5;   % separation between semi-circles
+  sep = -5;   % separation between semi-circles
 
   %% uniformly distributed data
   z  = (rad - thk * (1 - rand(1,N))) .* exp(-j*2*pi*rand(1,N));
@@ -71,8 +71,7 @@
   w = randn(1,3);                % initial weights
   X = [ones(size(y)); x1; x2];   % training data
   k_err = inf;                   % convergence criteria
-  for n = 1:N
-    x_n = X(:,n);
+  while k_err > 0 
     t = t + 1;                      % update training step counter
     y_hat = sign(w*X);              % classify
     y_err = 0.5*abs(y - y_hat);     % residual
@@ -87,7 +86,7 @@
     else
       wg = w;
     end
-    if 0 == mod(n,1)
+    if 0 == mod(t,1)
       ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
     endif
     x_k = X(:,k);                   %   in the training data
@@ -104,7 +103,7 @@
     disp('training done.')
     input('...')
   else
-    saveas(ax, 'figures/p3.1a.png');
+    saveas(ax, 'figures/p3.3a.png');
   end
  
 ## *EOF*

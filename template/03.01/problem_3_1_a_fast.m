@@ -1,10 +1,9 @@
 #!/usr/bin/env octave
-## problem_3_1_a.m
+## problem_3_1_a_fast.m
 ## Mac Radigan
 
   FORCES__SCRIPT_FILE=1;
   ux = ~isempty(getenv('LFD'));
-  if ux, graphics_toolkit('qt'); end
 
   function ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err)
     
@@ -20,13 +19,13 @@
       plot(x1(c1), x2(c1), 'LineWidth', 1, 'r.');
       hold on;
       plot(x1(c2), x2(c2), 'LineWidth', 1, 'b.');
-      axis(15 * [-1 +1 -1 +1]);
       hold on;
+      axis(15 * [-1 +1 -1 +1]);
     
     %% plot final hypothesis, g(x)
     ext = rad + thk;
-    m = -w(2)/max(w(3),eps);
-    b = -w(1)/max(w(3),eps);
+    m = -w(2)/w(3);
+    b = -w(1)/w(3);
     dx1 = linspace(-ext, ext, 2);
     dx2 = m * dx1 + b;
     ax = figure(30111);
@@ -36,8 +35,8 @@
       else
         plot(dx1, dx2, 'Color', 'green', 'LineWidth', 3);
       end
-      axis(15 * [-1 +1 -1 +1]);
       hold on;
+      axis(15 * [-1 +1 -1 +1]);
     
     drawnow();
     
@@ -67,44 +66,36 @@
 
   %% Perceptron Learning Algorithm (PLA)
   t = 0;                         % training step counter
- %w = zeros(1,3);                % initial weights
-  w = randn(1,3);                % initial weights
+  w = zeros(1,3);                % initial weights
+ %w = randn(1,3);                % initial weights
   X = [ones(size(y)); x1; x2];   % training data
   k_err = inf;                   % convergence criteria
-  for n = 1:N
-    x_n = X(:,n);
-    t = t + 1;                      % update training step counter
-    y_hat = sign(w*X);              % classify
-    y_err = 0.5*abs(y - y_hat);     % residual
-    [k_err, k] = max(y_err);        % select misclassified point
+  while k_err > 0 
+    t = t + 1;                   % update training step counter
+    ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
     if ux
       fprintf(1, 'error: %f\n', k_err);
       t
       w
     end
-    if k_err <= 0 
-      break
-    else
-      wg = w;
-    end
-    if 0 == mod(n,1)
-      ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
-    endif
-    x_k = X(:,k);                   %   in the training data
-    y_k = y(k);                     %   in the target set
-    w   = w + y_k*x_k';             % update weights
+    y_hat = sign(w*X);           % classify
+    y_err = 0.5*abs(y - y_hat);  % residual
+    [k_err, k] = max(y_err);     % select misclassified point
+    if k_err <= 0, continue, end
+    x_k = X(:,k);                %   in the training data
+    y_k = y(k);                  %   in the target set
+    w   = w + y_k*x_k';          % update weights
     if ux
+      disp('...')
       input('...')
     end
   end % training
- %ax = do_plot(ux, rad, thk, c1, c2, x1, x2, wg, k_err);
 
   ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w, k_err);
   if ux
     disp('training done.')
-    input('...')
   else
-    saveas(ax, 'figures/p3.1a.png');
+    saveas(ax, 'figures/p3.1a_fast.png');
   end
  
 ## *EOF*

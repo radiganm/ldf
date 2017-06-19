@@ -3,7 +3,8 @@
 ## Mac Radigan
 
   FORCES__SCRIPT_FILE=1;
-  ux=false;
+  ux = ~isempty(getenv('LFD'));
+  if ux, graphics_toolkit('qt'); end
 
   function ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w)
     
@@ -39,6 +40,7 @@
     set(ax, 'visible', show);
       plot(dx1, dx2, 'Color', 'green', 'LineWidth', 3);
       hold off;
+      axis(15 * [-1 +1 -1 +1]);
     
     drawnow();
     
@@ -73,7 +75,10 @@
   %% plot results
   ax = do_plot(ux, rad, thk, c1, c2, x1, x2, w);
 
-  if ~ux
+  if ux
+    disp('training done.')
+    input('...')
+  else
     saveas(ax, 'figures/p3.1b.png');
   end
 

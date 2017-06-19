@@ -72,6 +72,8 @@ But now we compute
 \begin{split}
 \left(xI-A\right)adj\left(xI-A\right) &= \left(xI-A\right)C\left(x\right) \\
                                       &= \left(xI-A\right)\left(B_0x^{n-1}+B_1x^{n-2}+\cdots+B_{n-2}x+B_{n-1}\right) \\
+                                      &= x^n B_0 + x^{n-1}\left(B_1 -AB_0\right) + x^{n-1}\left(B_2 - AB_1\right) + \cdots \\
+                                      & \mbox{ } + x\left(B_{n-1}-AB_{n-2}\right) - AB_{n-1} \\
                                       &= x^nI+x^{n-1}c_1I+\cdots+xc_{n-1}I+c_nI
 \end{split}
 \end{equation*}
