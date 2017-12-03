@@ -1,4 +1,5 @@
 #+TITLE: Learning From Data
 #+AUTHOR: Mac Radigan
+#+PDF: https://github.com/radiganm/lfd/blob/master/lfd.pdf
 
  # *EOF* 
